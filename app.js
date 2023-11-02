@@ -24,22 +24,17 @@ mongoose
     console.log(e);
   });
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerJSDoc = require("swagger-jsdoc");
-
-const options = {
-  swaggerDefinition: {
-    openapi: "3.0.0",
-    info: {
-      title: "My API",
-      version: "1.0.0",
-      description: "API documentation using Swagger",
-    },
-  },
-  apis: ["./routes/*.js"],
-};
-
-const swaggerSpec = swaggerJSDoc(options);
+app.get("/", (req, res) => {
+  res.json({
+    api: [
+      {
+        get: ["/products", "/producttype"],
+        post: ["/products", "/producttype", "/auth/login", "/auth/signup"],
+        put: ["/"],
+      },
+    ],
+  });
+});
 
 const productRouter = require("./router/productRouter");
 

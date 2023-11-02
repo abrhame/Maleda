@@ -3,7 +3,6 @@ const Products = require("../models/Products");
 const ProductType = require("../models/ProductType");
 
 module.exports.CreateProduct = wrapAsync(async (req, res) => {
-  //   console.log("clicked");
   if (!req.files.length) {
     return res.json({
       msg: "Image is Required",

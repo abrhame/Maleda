@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const productController = require("../controller/productController");
+const { addProductValidation } = require("../utils/joiValidation");
 
 const isAdmin = require("../utils/isAdmin");
 const multer = require("multer");
@@ -20,8 +21,20 @@ const images = upload.array("images");
 router.get("/", productController.GetAllProducts);
 router.get("/category/:category", productController.SearchCategory);
 router.get("/:id", productController.GetOneProduct);
-router.post("/", isAdmin, images, productController.CreateProduct);
-router.put("/:id", isAdmin, images, productController.EditProduct);
+router.post(
+  "/",
+  isAdmin,
+  images,
+  addProductValidation,
+  productController.CreateProduct
+);
+router.put(
+  "/:id",
+  isAdmin,
+  addProductValidation,
+  images,
+  productController.EditProduct
+);
 router.delete("/:id", isAdmin, productController.DeleteProduct);
 
 module.exports = router;

@@ -1,11 +1,22 @@
-const router = require('express').Router()
+const router = require("express").Router();
 
-const authController = require("../controller/authController")
+const authController = require("../controller/authController");
 
-router.post('/signup', authController.RegisterUser)
-router.post('/login', authController.LoginUser);
-router.post('/verifyToken', authController.verifyUserToken);
-router.post('/forgetpassword', authController.resetPassword);
-router.post('/changeforgetpassword', authController.changeForgetPassword);
+const {
+  addUserValidation,
+  addLoginValidation,
+  addTokenValidation,
+  addresetPasswordValidation,
+} = require("../utils/joiValidation");
+
+router.post("/signup", addUserValidation, authController.RegisterUser);
+router.post("/login", addLoginValidation, authController.LoginUser);
+router.post("/verifyToken", addTokenValidation, authController.verifyUserToken);
+router.post(
+  "/forgetpassword",
+  addresetPasswordValidation,
+  authController.resetPassword
+);
+router.post("/changeforgetpassword", authController.changeForgetPassword);
 
 module.exports = router;

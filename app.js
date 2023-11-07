@@ -11,13 +11,9 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const corsOptions = {
-  origin: 'http://localhost:3002', // Allow requests only from this origin
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Define the HTTP methods you want to support
-  credentials: true, // Allow cookies and credentials in the requests
-};
 
-app.use(cors(corsOptions));
+
+app.use(cors());
 const MONGO_URI = "mongodb+srv://ablakew7ab:NxMpZYNpidDNlmb9@cluster0.sarlvkq.mongodb.net/?retryWrites=true&w=majority";
 mongoose
   .connect(`${MONGO_URI}`, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -1,5 +1,14 @@
 const joi = require("@hapi/joi");
 
+
+const product = joi.object({
+  title: joi.string().required(),
+  id: joi.string().required(),
+  price: joi.number().required(),
+  quantity: joi.number(),
+})
+
+
 const schema = {
   product: joi.object({
     productName: joi.string().required(),
@@ -27,6 +36,22 @@ const schema = {
   }),
   resetPassword: joi.object({
     email: joi.string().required(),
+  }),
+
+  
+  orderSchema: joi.object({
+    cart: joi.array().items(product).required(),
+    user: joi.object(
+     { 
+      userName: joi.string().required(),
+      userEmail: joi.string().required(),
+      userPhoneNumber: joi.string().required(),
+      payed: joi.boolean().required(),
+      pickUpTime: joi.string().required(),
+      instructions: joi.string().required(),
+      totalPrice: joi.number().required(),
+    }
+    ),
   }),
 };
 

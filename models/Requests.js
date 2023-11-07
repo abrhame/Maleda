@@ -3,20 +3,37 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const requestSchema = new Schema({
-    from: {
-        type: string,
+    userName: {
+        type: String,
         required: true
     },
+    userPhoneNumber :{
+        type: String,
+        required:true
+    },
+    userEmail:{
+        type:String, 
+        required:true
+    },
     payed: {
-        type: boolean,
+        type: Boolean,
         default: false
     },
-    productInfo: {
-        type: mongoose.Types.ObjectId,
-        ref: "Products"
-    },
+    productInfo: [
+        [
+            {
+                id:{
+                    type:mongoose.Schema.Types.ObjectId,
+                    ref:"Products"
+                },
+                price:{
+                    type:Number,
+                }
+            }
+        ]
+    ],
     timeOrder: {
-        type: string,
+        type: String,
         required: true
     },
     qty: {
@@ -24,9 +41,16 @@ const requestSchema = new Schema({
         default: 0
     },
     reqStatus: {
-        type: string,
-        default: "pending",
-        enum: ["accepted", "pending", "rejected"]
+        type: String,
+        default: "not_picked",
+        enum: ["not_picked", "picked"]
+    }, 
+    totalPrice:{
+        type:Number,
+        required:true
+    }, 
+    description:{
+        type:String
     }
 })
 

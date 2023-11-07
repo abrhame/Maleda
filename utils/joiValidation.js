@@ -5,6 +5,7 @@ const {
   login,
   token,
   resetPassword,
+  orderSchema
 } = require("./joiValidationSchema");
 
 module.exports = {
@@ -75,4 +76,15 @@ module.exports = {
     }
     next();
   },
+  addOrderValidation: async function (req, res, next) {
+    const value = await orderSchema.validate(req.body);
+    if (value.error) {
+      return res
+        .json({
+          msg: value.error.details[0].message,
+        })
+        .status(403);
+    }
+    next();
+  }
 };

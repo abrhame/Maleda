@@ -11,16 +11,21 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3002', // Allow requests only from this origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Define the HTTP methods you want to support
+  credentials: true, // Allow cookies and credentials in the requests
+};
 
-const MONGO_URI = "mongodb://localhost/maleda";
+app.use(cors(corsOptions));
+const MONGO_URI = "mongodb+srv://ablakew7ab:NxMpZYNpidDNlmb9@cluster0.sarlvkq.mongodb.net/?retryWrites=true&w=majority";
 mongoose
   .connect(`${MONGO_URI}`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected To Database Successfully");
   })
   .catch((e) => {
-    console.log("Error While Connecting to Database");
+    console.log("Error WhiGb0HySZ38LMEo7BNle Connecting to Database");
     console.log(e);
   });
 
@@ -36,17 +41,22 @@ app.get("/", (req, res) => {
   });
 });
 
+
+
 const productRouter = require("./router/productRouter");
 
 const authRouter = require("./router/authRouter");
 
 const categoryRouter = require("./router/productTypeRouter");
 
+const orderRouter = require("./router/orderRouter");
+
 // app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/products", productRouter);
 app.use("/auth", authRouter);
 app.use("/producttype", categoryRouter);
+app.use("/order", orderRouter)
 
 app.use("*", function (req, res, next) {
   next(new ExpressError("Page Not Found", 404));

@@ -11,6 +11,8 @@ router.get("/", viewOrders);
 
 router.get("/:id", viewOneOrder);
 
+router.put("/:id", PickedUp);
+
 
 
 

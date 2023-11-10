@@ -28,7 +28,10 @@ const requestSchema = new Schema({
                 },
                 price:{
                     type:Number,
-                }
+                },
+                quantity:{
+                    type:Number,
+                },
             }
         ]
     ],

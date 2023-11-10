@@ -31,6 +31,7 @@ module.exports.CreateProduct = wrapAsync(async (req, res) => {
     imgPath: paths,
     price: Number(req.body.price),
     qtyLeft: Number(req.body.qtyLeft),
+    description: String(req.body.description) || "",
   };
 
   const newProduct = new Products(data);

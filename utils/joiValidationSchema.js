@@ -4,8 +4,8 @@ const joi = require("@hapi/joi");
 const product = joi.object({
   title: joi.string().required(),
   id: joi.string().required(),
-  price: joi.number().required(),
-  quantity: joi.number(),
+  totalPrice: joi.number().required(),
+  quantity: joi.number().required(),
 })
 
 

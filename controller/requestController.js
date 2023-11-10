@@ -1,10 +1,10 @@
 const Requests = require("../models/Requests");
-
+const mongoose = require("mongoose");
 const Products = require("../models/Products");
 
 const wrapAsync = require("../utils/wrapAsync");
 
-module.exports.CreateOrder = (async (req, res) => {
+module.exports.CreateOrder = wrapAsync(async (req, res) => {
     const carts = req.body.cart;
     const user = req.body.user;
 
@@ -13,7 +13,13 @@ module.exports.CreateOrder = (async (req, res) => {
     for(let cart of carts){
         const product = await Products.findById(cart.id);
         // console.log(product)
+        if (!product) {
+            return res.json({
+                msg: "Product not found"
+            }).status(400)
+        }
         const qty = product.qtyLeft - cart.quantity;
+
         if(qty < 0){
             return res.json({
                 msg:"Not enough product"
@@ -39,7 +45,8 @@ module.exports.CreateOrder = (async (req, res) => {
         const product = await Products.findById(cart.id);
         const qty = product.qtyLeft - cart.quantity;
         await Products.findByIdAndUpdate(cart._id, {qtyLeft:qty});
-        productInfo.push([cart._id, cart.totalPrice]);
+        const v = { id: cart.id, price: cart.totalPrice, quantity: cart.quantity }
+        productInfo.push([v]);
     }
 
     data.productInfo = productInfo;

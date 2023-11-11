@@ -64,7 +64,7 @@ module.exports.EditProduct = wrapAsync(async (req, res) => {
   const paths = [];
 
   files.map((file) => {
-    let newGallery = file.filename;
+    let newGallery = file.path;
     paths.push(newGallery);
   });
 

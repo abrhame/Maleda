@@ -24,7 +24,7 @@ module.exports.RegisterUser = wrapAsync(async (req, res) => {
   if (req.body.password != req.body.confirm_password) {
     return res
       .json({
-        msg: "Passwords must match",
+        msg: false,
       })
       .status(400);
   }
@@ -43,7 +43,7 @@ module.exports.RegisterUser = wrapAsync(async (req, res) => {
   await newUser.save();
 
   return res.json({
-    msg: "Account created Successfully",
+    msg: true,
   });
 });
 
@@ -92,7 +92,7 @@ module.exports.resetPassword = async function (req, res) {
   if (!user) {
     return res
       .json({
-        msg: "user with the given email dont exist",
+        msg: false,
       })
       .status(200);
   }
@@ -115,7 +115,7 @@ module.exports.resetPassword = async function (req, res) {
   );
   return res
     .json({
-      msg: "Reset Password link is sent Via Email Successfully",
+      msg: true,
     })
     .status(200);
 };
@@ -127,7 +127,7 @@ module.exports.changeForgetPassword = async function (req, res) {
   if (!user) {
     return res
       .json({
-        msg: "Invalid Link orExpired Link",
+        msg: false,
       })
       .status(200);
   }
@@ -135,7 +135,7 @@ module.exports.changeForgetPassword = async function (req, res) {
   if (!check_token) {
     return res
       .json({
-        msg: "Invalid or Expired Token",
+        msg: false,
       })
       .status(401);
   }
@@ -146,7 +146,7 @@ module.exports.changeForgetPassword = async function (req, res) {
   if (password != confirm_password) {
     return res
       .json({
-        msg: "Passwords Must Match",
+        msg: false,
       })
       .status(401);
   }
@@ -160,7 +160,7 @@ module.exports.changeForgetPassword = async function (req, res) {
   await check_token.delete();
 
   return res.json({
-    msg: "Password Changed Successfully",
+    msg: true,
   });
 };
 
@@ -186,7 +186,7 @@ module.exports.ChangePassword = wrapAsync(async (req, res) => {
   if (password != confirmPassword) {
     return res
       .json({
-        msg: "Passwords dont match",
+        msg: false,
       })
       .status(400);
   }
@@ -210,7 +210,7 @@ module.exports.ChangePassword = wrapAsync(async (req, res) => {
   if (!user) {
     return res
       .json({
-        msg: "Invalid User",
+        msg: false,
       })
       .status(400);
   }
@@ -223,7 +223,7 @@ module.exports.ChangePassword = wrapAsync(async (req, res) => {
 
   return res
     .json({
-      msg: "Password changed Successfully",
+      msg: true,
     })
     .status(200);
 });

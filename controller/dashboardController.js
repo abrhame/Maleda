@@ -1,4 +1,5 @@
 const Requests = require("../models/Requests");
+const Products = require("../models/Products");
 
 const wrapAsync = require("../utils/wrapAsync");
 
@@ -47,11 +48,16 @@ module.exports.todayMostOrdered = wrapAsync(async (req, res) => {
     },
   ]);
 
-  const products = mostOccurredProduct.length > 0 ? mostOccurredProduct : null;
+  const data = [];
+
+  for (let pid of mostOccurredProduct) {
+    const product = await Products.findById(pid.id);
+    data.push(product);
+  }
 
   res
     .json({
-      products,
+      data,
     })
     .status(200);
 });

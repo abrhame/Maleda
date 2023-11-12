@@ -16,7 +16,7 @@ module.exports.RegisterUser = wrapAsync(async (req, res) => {
   } else {
     return res
       .json({
-        msg: "Admin account already created",
+        msg: true,
       })
       .status(400);
   }
@@ -200,7 +200,7 @@ module.exports.ChangePassword = wrapAsync(async (req, res) => {
   if (!decodedToken) {
     return res
       .json({
-        msg: "Invalid User",
+        msg: false,
       })
       .status(400);
   }

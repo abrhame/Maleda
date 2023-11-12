@@ -54,7 +54,7 @@ module.exports.LoginUser = wrapAsync(async (req, res) => {
   if (!user) {
     return res
       .json({
-        msg: "Incorrect Username or Password",
+        msg: false,
       })
       .status(400);
   }
@@ -65,7 +65,7 @@ module.exports.LoginUser = wrapAsync(async (req, res) => {
   if (!correctPassword) {
     return res
       .json({
-        msg: "Incorrect Username or Password",
+        msg: false,
       })
       .status(400);
   }
@@ -76,7 +76,7 @@ module.exports.LoginUser = wrapAsync(async (req, res) => {
 
   return res
     .json({
-      msg: "User Logged in",
+      msg: true,
       userName: user.userName,
       email: user.email,
       isAdmin: user.isAdmin,

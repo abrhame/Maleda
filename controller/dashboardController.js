@@ -47,12 +47,11 @@ module.exports.todayMostOrdered = wrapAsync(async (req, res) => {
     },
   ]);
 
-  const mostOccurredProductId =
-    mostOccurredProduct.length > 0 ? mostOccurredProduct[0]._id : null;
+  const products = mostOccurredProduct.length > 0 ? mostOccurredProduct : null;
 
   res
     .json({
-      mostOccurredProductId,
+      products,
     })
     .status(200);
 });

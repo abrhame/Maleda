@@ -1,13 +1,11 @@
 const joi = require("@hapi/joi");
 
-
 const product = joi.object({
   title: joi.string().required(),
   id: joi.string().required(),
   totalPrice: joi.number().required(),
   quantity: joi.number().required(),
-})
-
+});
 
 const schema = {
   product: joi.object({
@@ -38,11 +36,9 @@ const schema = {
     email: joi.string().required(),
   }),
 
-  
   orderSchema: joi.object({
     cart: joi.array().items(product).required(),
-    user: joi.object(
-     { 
+    user: joi.object({
       userName: joi.string().required(),
       userEmail: joi.string().required(),
       userPhoneNumber: joi.string().required(),
@@ -50,8 +46,11 @@ const schema = {
       pickUpTime: joi.string().required(),
       instructions: joi.string().required(),
       totalPrice: joi.number().required(),
-    }
-    ),
+    }),
+  }),
+  confirmPasswordSchema: joi.object({
+    password: joi.string().required(),
+    confirmPassword: joi.string().required(),
   }),
 };
 

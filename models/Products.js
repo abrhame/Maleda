@@ -25,6 +25,17 @@ const productSchema = new Schema({
   },
 });
 
+productSchema.pre("remove", async function (next) {
+  const productId = this._id;
+
+  // Delete requests associated with the product
+  await mongoose.model("Requests").deleteMany({
+    "productInfo.id": productId,
+  });
+
+  next();
+});
+
 const Products = model("Products", productSchema);
 
 module.exports = Products;

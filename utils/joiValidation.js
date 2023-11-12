@@ -5,7 +5,8 @@ const {
   login,
   token,
   resetPassword,
-  orderSchema
+  orderSchema,
+  confirmPasswordSchema,
 } = require("./joiValidationSchema");
 
 module.exports = {
@@ -86,5 +87,16 @@ module.exports = {
         .status(403);
     }
     next();
-  }
+  },
+  addPasswordValidation: async function (req, res, next) {
+    const value = await confirmPasswordSchema.validate(req.body);
+    if (value.error) {
+      return res
+        .json({
+          msg: value.error.details[0].message,
+        })
+        .status(403);
+    }
+    next();
+  },
 };

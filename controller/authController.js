@@ -13,6 +13,12 @@ module.exports.RegisterUser = wrapAsync(async (req, res) => {
 
   if (users.length <= 0) {
     isAdmin = true;
+  } else {
+    return res
+      .json({
+        msg: "Admin account already created",
+      })
+      .status(400);
   }
 
   if (req.body.password != req.body.confirm_password) {
@@ -170,6 +176,54 @@ module.exports.verifyUserToken = wrapAsync(async (req, res) => {
   return res
     .json({
       payload: verified,
+    })
+    .status(200);
+});
+
+module.exports.ChangePassword = wrapAsync(async (req, res) => {
+  const { password, confirmPassword } = req.body;
+
+  if (password != confirmPassword) {
+    return res
+      .json({
+        msg: "Passwords dont match",
+      })
+      .status(400);
+  }
+
+  const token = req.headers["authorization"];
+
+  const userToken = token.split(" ")[1];
+
+  const decodedToken = jwt.verify(userToken, SECRET_KEY);
+
+  if (!decodedToken) {
+    return res
+      .json({
+        msg: "Invalid User",
+      })
+      .status(400);
+  }
+
+  const user = await User.findById(decodedToken.id);
+
+  if (!user) {
+    return res
+      .json({
+        msg: "Invalid User",
+      })
+      .status(400);
+  }
+
+  const hashedpassword = await bcrypt.hash(password, SALT);
+
+  user.password = hashedpassword;
+
+  await user.save();
+
+  return res
+    .json({
+      msg: "Password changed Successfully",
     })
     .status(200);
 });

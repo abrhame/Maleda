@@ -47,12 +47,15 @@ const categoryRouter = require("./router/productTypeRouter");
 
 const orderRouter = require("./router/orderRouter");
 
+const dashboardRouter = require("./router/dashboardRouter");
+
 // app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/products", productRouter);
 app.use("/auth", authRouter);
 app.use("/producttype", categoryRouter);
 app.use("/order", orderRouter)
+app.use("/dashboard", dashboardRouter);
 
 app.use("*", function (req, res, next) {
   next(new ExpressError("Page Not Found", 404));

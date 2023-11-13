@@ -5,7 +5,7 @@ const product = joi.object({
   id: joi.string().required(),
   totalPrice: joi.number().required(),
   quantity: joi.number().required(),
-  instruction: joi.string().required(),
+  instruction: joi.string(),
 });
 
 const schema = {

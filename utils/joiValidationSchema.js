@@ -38,7 +38,7 @@ const schema = {
   }),
 
   orderSchema: joi.object({
-    cart: joi.array().items(product).required(),
+    cart: joi.array().items(product),
     user: joi.object({
       userName: joi.string().required(),
       userEmail: joi.string().required(),

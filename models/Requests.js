@@ -33,6 +33,9 @@ const requestSchema = new Schema(
           quantity: {
             type: Number,
           },
+          instruction: {
+            type: String,
+          },
         },
       ],
     ],

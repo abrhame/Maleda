@@ -33,7 +33,6 @@ module.exports.CreateOrder = wrapAsync(async (req, res) => {
     userPhoneNumber: user.userPhoneNumber,
     payed: user.payed,
     timeOrder: user.pickUpTime,
-    description: user.instructions,
     totalPrice: user.totalPrice,
   };
 
@@ -41,8 +40,13 @@ module.exports.CreateOrder = wrapAsync(async (req, res) => {
   for (let cart of carts) {
     const product = await Products.findById(cart.id);
     const qty = product.qtyLeft - cart.quantity;
-    await Products.findByIdAndUpdate(cart._id, { qtyLeft: qty });
-    const v = { id: cart.id, price: cart.totalPrice, quantity: cart.quantity };
+    await Products.findByIdAndUpdate(cart.id, { qtyLeft: qty });
+    const v = {
+      id: cart.id,
+      price: cart.totalPrice,
+      quantity: cart.quantity,
+      instruction: cart.instruction,
+    };
     productInfo.push([v]);
   }
 

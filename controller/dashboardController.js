@@ -20,8 +20,9 @@ module.exports.getTotalRevenue = wrapAsync(async (req, res) => {
 
 module.exports.todayMostOrdered = wrapAsync(async (req, res) => {
   const today = new Date();
-  const startOfDay = new Date(today.setHours(00, 00, 00));
-  const endOfDay = new Date(today.setHours(23, 59, 59));
+  // const startOfDay = new Date(today.setHours(00, 00, 00));
+  // const endOfDay = new Date(today.setHours(23, 59, 59));
+  console.log(startOfDay, endOfDay);
   const mostOccurredProduct = await Requests.aggregate([
     {
       $match: {
@@ -50,20 +51,21 @@ module.exports.todayMostOrdered = wrapAsync(async (req, res) => {
 
   const data = [];
 
+  // console.log(mostOccurredProduct);
   for (let pid of mostOccurredProduct) {
-    const product = await Products.findById(pid.id);
+    const product = await Products.findById(pid._id);
     data.push(product);
   }
 
   res
     .json({
-      data,
+      payload: data,
     })
     .status(200);
 });
 
 module.exports.allOrder = wrapAsync(async (req, res) => {
-  const orders = Requests.find();
+  const orders = await Requests.find();
 
   return res
     .json({

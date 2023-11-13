@@ -5,6 +5,7 @@ const product = joi.object({
   id: joi.string().required(),
   totalPrice: joi.number().required(),
   quantity: joi.number().required(),
+  instruction: joi.string().required(),
 });
 
 const schema = {
@@ -44,7 +45,6 @@ const schema = {
       userPhoneNumber: joi.string().required(),
       payed: joi.boolean().required(),
       pickUpTime: joi.string().required(),
-      instructions: joi.string().required(),
       totalPrice: joi.number().required(),
     }),
   }),
